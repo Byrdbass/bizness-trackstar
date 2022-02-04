@@ -33,4 +33,4 @@ const showEmployees = () => {
     })
 };
 
-module.exports = showEmployees(), showRoles(), showDepartments();
+module.exports = showEmployees, showRoles, showDepartments;
