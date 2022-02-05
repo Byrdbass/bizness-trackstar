@@ -1,5 +1,8 @@
 const db = require('../config/connection')
 const consoleTable = require('console.table');
+const questionsArray = require('../lib/questions')
+const askQuestions = require('../../index'); 
+const menuQuestions = require('../lib/questions');
 
 const showDepartments = () => {
     console.log('show departments function works')
@@ -29,7 +32,10 @@ const showEmployees = () => {
         if (err) {
             throw err;
         }
+        console.log('\n');
         console.table(result);
+        console.log('\n');
+        //askQuestions(menuQuestions);
     })
 };
 

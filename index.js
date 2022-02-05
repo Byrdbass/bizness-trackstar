@@ -27,6 +27,7 @@ askQuestions = () => {
             switch (answers.firstMenu) {
 
                 case "View All Employees":
+                    
                     showEmployees()
                     // inquirer.prompt(menuQuestions).then( () => {askQuestions()});
                     break;
@@ -41,7 +42,7 @@ askQuestions = () => {
 
                 case "View All Roles":
                     showRoles();
-                    askQuestions();
+                    //askQuestions();
                     break;
 
                 case "Add Role":
@@ -61,6 +62,11 @@ askQuestions = () => {
                     break;
             }
             console.log(answers)
+            if (answers.firstMenu === 'Quit') {
+                return;
+            }
+            
         }
         );
 };
+module.exports = askQuestions;
