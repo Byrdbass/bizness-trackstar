@@ -22,4 +22,16 @@ const showEmployees = () => {
     return connect.promise().query(sqlQuery)
 };
 
+const addEmployee = () => {
+    const sqlQuery = 'INSERT INTO employee (first_name, last_name)'
+}
+
+const addDepartment = () => {
+    const sqlQuery = 'INSERT INTO department (name)'
+}
+
+const addRole = () => {
+    const sqlQuery = 'INSERT INTO role (name)'
+}
+
 module.exports = { showDepartments, showEmployees, showRoles };

@@ -38,27 +38,27 @@ const addEmployeeQuestions = [
 const addRoleQuestions = [
     {
         type: 'input',
-        message: "",
-        name: ''
+        message: "What is the title of the Role?",
+        name: 'newRole'
     },
     {
         type: 'input',
-        message: "",
-        name: ''
+        message: "What is the Salary of the New Role?",
+        name: 'newSalary'
     },
     {
         type: 'list',
-        message: "",
-        name: '',
-        choices: []
+        message: "What department is this Role in?",
+        name: 'newRoleDepartment',
+        choices: ['Sales','Engineering','Finance','Legal']
     }
 ];
 //ADD DEPARTMENT QUESTIONS
 const addDepartmentQuestions =[
     {
-    type: 'input',
-        message: "",
-            name: ''
+        type: 'input',
+        message: "What is the name of the new Department?",
+        name: 'newDepartment'
     }
 ];
     //HOW WILL YOU UPDATE THE EMPLOYEES ROLE?
