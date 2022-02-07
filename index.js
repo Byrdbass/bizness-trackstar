@@ -8,16 +8,17 @@ const addEmployeeQuestions = require('./main/lib/questions');
 const addRoleQuestions = require('./main/lib/questions');
 const addDepartmentQuestions = require('./main/lib/questions');
 //functions imported from utils directory - query.js
-const showEmployees = require('./main/utils/query'); 
-const showRoles = require('./main/utils/query');
-const showDepartments = require('./main/utils/query');
+const { showDepartments, showEmployees, showRoles } = require('./main/utils/query');
+// const showEmployees = require('./main/utils/query'); 
+
+// const showDepartments = require('./main/utils/query');
 
 
 db.connect((err) => {
     if (err) {
         throw err;
     }
-    console.log('\nWELCOME TO EMPLOYEE TRACKER\n')
+    //console.log('\nWELCOME TO EMPLOYEE TRACKER\n')
     askQuestions();
 });
 
@@ -26,10 +27,8 @@ askQuestions = () => {
         .then((answers) => {
             switch (answers.firstMenu) {
 
-                case "View All Employees":
-                    
-                    showEmployees()
-                    // inquirer.prompt(menuQuestions).then( () => {askQuestions()});
+                case "View All Employees":                    
+                    viewEmployees()
                     break;
 
                 case "Add Employee":
@@ -41,7 +40,7 @@ askQuestions = () => {
                     break;
 
                 case "View All Roles":
-                    showRoles();
+                    viewRoles();
                     //askQuestions();
                     break;
 
@@ -50,7 +49,7 @@ askQuestions = () => {
                     break;
 
                 case "View All Departments":
-                    showDepartments();
+                    viewDepartments();
                     break;
 
                 case "Add Department":
@@ -61,12 +60,33 @@ askQuestions = () => {
                     console.log("Thank you for using Employee-Tracker")
                     break;
             }
-            console.log(answers)
+            //console.log(answers)
             if (answers.firstMenu === 'Quit') {
                 return;
             }
             
         }
         );
+};
+
+const viewEmployees = () => {
+    showEmployees().then( (result) => {
+        console.table(result[0])
+    }
+    ).then( () => askQuestions())
+};
+
+const viewDepartments = () => {
+    showDepartments().then( (result) => {
+        console.table(result[0])
+    }
+    ).then( () => askQuestions())
+};
+
+const viewRoles = () => {
+    showRoles().then( (result) => {
+        console.table(result[0])
+    }
+    ).then( () => askQuestions())
 };
 module.exports = askQuestions;

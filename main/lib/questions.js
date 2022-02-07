@@ -4,7 +4,7 @@ const menuQuestions = [
     //FIRST MENU QUESTIONS
     {
         type: 'list',
-        message: '\nWELCOME TO EMPLOYEE TRACKER\nWhat would you like to do?',
+        message: '\n\nWELCOME TO EMPLOYEE TRACKER\n\nWhat would you like to do?',
         name: 'firstMenu',
         choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
     }
