@@ -22,16 +22,19 @@ const showEmployees = () => {
     return connect.promise().query(sqlQuery)
 };
 
-const addEmployee = () => {
-    const sqlQuery = 'INSERT INTO employee (first_name, last_name)'
+const addEmployee = (newEmployee) => {
+    const sqlQuery = 'INSERT INTO employee SET ?'
+    return connect.promise().query(sqlQuery, newEmployee)
 }
 
-const addDepartment = () => {
-    const sqlQuery = 'INSERT INTO department (name)'
+const addDepartment = (newDepartment) => {
+    const sqlQuery = 'INSERT INTO department SET ?'
+    return connect.promise().query(sqlQuery, newDepartment)
 }
 
-const addRole = () => {
-    const sqlQuery = 'INSERT INTO role (name)'
+const addRole = (newRole) => {
+    const sqlQuery = 'INSERT INTO role SET ?'
+    return connect.promise().query(sqlQuery, newRole)
 }
 
-module.exports = { showDepartments, showEmployees, showRoles };
+module.exports = { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee };

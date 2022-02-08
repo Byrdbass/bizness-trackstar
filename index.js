@@ -3,12 +3,9 @@ const db = require('./main/config/connection');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
 //functions imported from lib directory - questions.js
-const menuQuestions = require('./main/lib/questions');
-const addEmployeeQuestions = require('./main/lib/questions');
-const addRoleQuestions = require('./main/lib/questions');
-const addDepartmentQuestions = require('./main/lib/questions');
+const { menuQuestions, addDepartmentQuestions, addRoleQuestions, addEmployeeQuestions } = require('./main/lib/questions');
 //functions imported from utils directory - query.js
-const { showDepartments, showEmployees, showRoles } = require('./main/utils/query');
+const { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee } = require('./main/utils/query');
 // const showEmployees = require('./main/utils/query'); 
 
 // const showDepartments = require('./main/utils/query');
@@ -18,21 +15,21 @@ db.connect((err) => {
     if (err) {
         throw err;
     }
-    //console.log('\nWELCOME TO EMPLOYEE TRACKER\n')
+    console.log('\n\nWELCOME TO EMPLOYEE TRACKER\n\n')
     askQuestions();
 });
 
-askQuestions = () => {
+const askQuestions = () => {
     inquirer.prompt(menuQuestions)
         .then((answers) => {
             switch (answers.firstMenu) {
 
-                case "View All Employees":                    
+                case "View All Employees":
                     viewEmployees()
                     break;
 
                 case "Add Employee":
-                    addEmployee();
+                    addNewEmployee();
                     break;
 
                 case "Update Employee Role":
@@ -45,7 +42,7 @@ askQuestions = () => {
                     break;
 
                 case "Add Role":
-                    addRole();
+                    addNewRole();
                     break;
 
                 case "View All Departments":
@@ -53,7 +50,8 @@ askQuestions = () => {
                     break;
 
                 case "Add Department":
-                    addDepartment();
+                    //console.log('department')
+                    addNewDepartment();
                     break;
 
                 case "Quit":
@@ -64,31 +62,108 @@ askQuestions = () => {
             if (answers.firstMenu === 'Quit') {
                 return;
             }
-            
+
         }
         );
 };
 
 const viewEmployees = () => {
-    showEmployees().then( (result) => {
+    showEmployees().then((result) => {
         console.table(result[0])
     }
-    ).then( () => askQuestions())
+    ).then(() => askQuestions())
 };
 
 const viewDepartments = () => {
-    showDepartments().then( (result) => {
+    showDepartments().then((result) => {
         console.table(result[0])
     }
-    ).then( () => askQuestions())
+    ).then(() => askQuestions())
 };
 
 const viewRoles = () => {
-    showRoles().then( (result) => {
+    showRoles().then((result) => {
         console.table(result[0])
     }
-    ).then( () => askQuestions())
+    ).then(() => askQuestions())
 };
 
+const addNewDepartment = () => {
+    inquirer.prompt(addDepartmentQuestions).then((answers) => {
+        console.log(answers)
+        addDepartment(answers).then((result) => {
+            console.log('New Department has been added to the database')
+        }).then(() => askQuestions())
+    })
+};
 
-module.exports = askQuestions;
+const addNewRole = () => {
+    showDepartments().then((result) => {
+        //console.log(result[0])
+        const departmentChoices = result[0].map((department) =>
+        (
+            {
+                name: department.name,
+                value: department.id
+            }
+        )
+        );
+        console.log(departmentChoices);
+        addRoleQuestions.push({
+            type: 'list',
+            message: "What department is this Role in?",
+            name: 'department_id',
+            choices: departmentChoices
+        })
+        inquirer.prompt(addRoleQuestions).then((answers) => {
+            console.log(answers)
+            addRole(answers).then((result) => {
+                console.log('New Role has been added to the database')
+            }).then(() => askQuestions())
+        })
+    })
+
+};
+
+const addNewEmployee = () => {
+    showRoles().then((result) => {
+        const roleChoices = result[0].map((role) =>
+        (
+            {
+                name: role.title,
+                value: role.id
+            }
+        )
+        );
+        showEmployees().then((result) => {
+            const managerChoices = result[0].map((employee) =>
+            (
+                {
+                    name: employee.first_name,
+                    value: employee.id
+                }
+            ))
+            console.log(roleChoices)
+            console.log(managerChoices)
+            addEmployeeQuestions.push({
+                type: 'list',
+                message: "What is the Employee's role in the company?",
+                name: 'role_id',
+                choices: roleChoices
+            },
+            {
+                type: 'list',
+                message: "Who is the Employee's Manager?",
+                name: 'manager_id',
+                choices: managerChoices
+            })
+        inquirer.prompt(addEmployeeQuestions).then((answers) => {
+            addEmployee(answers).then((result) => {
+                console.log('New Employee has been added to the database')
+            }).then(()=> askQuestions())
+        })
+        })
+    })
+};
+
+//module.exports = askQuestions;
