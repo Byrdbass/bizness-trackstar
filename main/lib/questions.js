@@ -47,5 +47,4 @@ const addDepartmentQuestions =[
 
 
 
-
 module.exports = { menuQuestions, addEmployeeQuestions, addRoleQuestions, addDepartmentQuestions, addEmployeeQuestions };

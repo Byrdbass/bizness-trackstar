@@ -5,7 +5,7 @@ const consoleTable = require('console.table');
 //functions imported from lib directory - questions.js
 const { menuQuestions, addDepartmentQuestions, addRoleQuestions, addEmployeeQuestions } = require('./main/lib/questions');
 //functions imported from utils directory - query.js
-const { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee } = require('./main/utils/query');
+const { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee, updateEmployee } = require('./main/utils/query');
 // const showEmployees = require('./main/utils/query'); 
 
 // const showDepartments = require('./main/utils/query');
@@ -33,12 +33,11 @@ const askQuestions = () => {
                     break;
 
                 case "Update Employee Role":
-                    updateEmployee();
+                    updateEmployeeRole();
                     break;
 
                 case "View All Roles":
                     viewRoles();
-                    //askQuestions();
                     break;
 
                 case "Add Role":
@@ -166,4 +165,44 @@ const addNewEmployee = () => {
     })
 };
 
-//module.exports = askQuestions;
+const updateEmployeeRole = () => {
+    showEmployees().then((result) =>{
+        const updateEmployeeChoices = result[0].map((employee) =>
+        (
+            {
+                name: employee.first_name,
+                value: employee.id
+            }
+        )
+        );
+        showRoles().then((result) => {
+            const updateRoleChoices = result[0].map((role) =>
+            (
+                {
+                    name: role.title,
+                    value: role.id
+                }
+            )
+        );
+        const updateRoleQuestions = [
+            {
+                type: 'list',
+                message: "Which employee would you like to update?",
+                name: '',
+                choices: updateEmployeeChoices
+            },
+            {
+                type: 'list',
+                message: "What Role would you like to add to this employee?",
+                name: '',
+                choices: updateRoleChoices
+            }
+        ];
+        inquirer.prompt(updateRoleQuestions).then((answers) => {
+            updateEmployee(answers).then((result) => {
+                console.log('Employee Role has been changed')
+            }).then(() => askQuestions());
+        })
+    })
+    })
+};

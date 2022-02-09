@@ -18,23 +18,28 @@ const showRoles = () => {
 
 const showEmployees = () => {
     //console.log('show employees in employee table')
-    const sqlQuery = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id;'
+    const sqlQuery = 'SELECT employee.id, employee.first_name, employee.last_name, role.title, employee.manager_id, department.name AS department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id;'
     return connect.promise().query(sqlQuery)
 };
 
 const addEmployee = (newEmployee) => {
     const sqlQuery = 'INSERT INTO employee SET ?'
     return connect.promise().query(sqlQuery, newEmployee)
-}
+};
 
 const addDepartment = (newDepartment) => {
     const sqlQuery = 'INSERT INTO department SET ?'
     return connect.promise().query(sqlQuery, newDepartment)
-}
+};
 
 const addRole = (newRole) => {
     const sqlQuery = 'INSERT INTO role SET ?'
     return connect.promise().query(sqlQuery, newRole)
-}
+};
 
-module.exports = { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee };
+const updateEmployee = (updatedRole) => {
+    const sqlQuery = ''
+    return connect.promise().query(sqlQuery, updatedRole)
+};
+
+module.exports = { showDepartments, showEmployees, showRoles, addDepartment, addRole, addEmployee, updateEmployee };
