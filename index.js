@@ -188,21 +188,23 @@ const updateEmployeeRole = () => {
             {
                 type: 'list',
                 message: "Which employee would you like to update?",
-                name: '',
+                name: 'updateEmployeeChoice',
                 choices: updateEmployeeChoices
             },
             {
                 type: 'list',
                 message: "What Role would you like to add to this employee?",
-                name: '',
+                name: 'updateRoleChoice',
                 choices: updateRoleChoices
             }
         ];
         inquirer.prompt(updateRoleQuestions).then((answers) => {
+            console.log(answers);
             updateEmployee(answers).then((result) => {
-                console.log('Employee Role has been changed')
-            }).then(() => askQuestions());
+                console.log('Employee Role has been changed');
+                askQuestions();
+            })
         })
     })
-    })
+})
 };

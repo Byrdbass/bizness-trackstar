@@ -43,8 +43,5 @@ const addDepartmentQuestions =[
         name: 'name'
     }
 ];
-    //HOW WILL YOU UPDATE THE EMPLOYEES ROLE?
-
-
 
 module.exports = { menuQuestions, addEmployeeQuestions, addRoleQuestions, addDepartmentQuestions, addEmployeeQuestions };
