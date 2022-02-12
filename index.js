@@ -89,7 +89,7 @@ const viewRoles = () => {
 
 const addNewDepartment = () => {
     inquirer.prompt(addDepartmentQuestions).then((answers) => {
-        console.log(answers)
+        //console.log(answers)
         addDepartment(answers).then((result) => {
             console.log('New Department has been added to the database')
         }).then(() => askQuestions())
@@ -115,7 +115,7 @@ const addNewRole = () => {
             choices: departmentChoices
         })
         inquirer.prompt(addRoleQuestions).then((answers) => {
-            console.log(answers)
+            //console.log(answers)
             addRole(answers).then((result) => {
                 console.log('New Role has been added to the database')
             }).then(() => askQuestions())
@@ -142,8 +142,8 @@ const addNewEmployee = () => {
                     value: employee.id
                 }
             ))
-            console.log(roleChoices)
-            console.log(managerChoices)
+            //console.log(roleChoices)
+            //console.log(managerChoices)
             addEmployeeQuestions.push({
                 type: 'list',
                 message: "What is the Employee's role in the company?",
@@ -199,7 +199,7 @@ const updateEmployeeRole = () => {
             }
         ];
         inquirer.prompt(updateRoleQuestions).then((answers) => {
-            console.log(answers);
+            //console.log(answers);
             updateEmployee(answers).then((result) => {
                 console.log('Employee Role has been changed');
                 askQuestions();
